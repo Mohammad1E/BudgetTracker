@@ -54,6 +54,24 @@ bool PersonRepository::update(const Person& p)
     return true;
 }
 
+bool PersonRepository::hasTransactions(qint64 id) const
+{
+    QSqlQuery q(m_db->connection());
+    q.prepare("SELECT 1 FROM transactions WHERE person_id=? LIMIT 1");
+    q.addBindValue(id);
+    if (!q.exec()) { qWarning() << "[PersonRepo] hasTransactions:" << q.lastError().text(); return true; }
+    return q.next();
+}
+
+bool PersonRepository::remove(qint64 id)
+{
+    QSqlQuery q(m_db->connection());
+    q.prepare("DELETE FROM people WHERE id=?");
+    q.addBindValue(id);
+    if (!q.exec()) { qWarning() << "[PersonRepo] remove:" << q.lastError().text(); return false; }
+    return true;
+}
+
 bool PersonRepository::setArchived(qint64 id, bool archived)
 {
     QSqlQuery q(m_db->connection());

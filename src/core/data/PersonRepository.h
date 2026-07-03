@@ -13,6 +13,8 @@ public:
     QVector<Person> list(bool includeArchived = false) const;
     qint64 insert(const Person& p);     // returns new id, 0 on failure
     bool   update(const Person& p);
+    bool   hasTransactions(qint64 id) const;
+    bool   remove(qint64 id);
     bool   setArchived(qint64 id, bool archived);
 
 private:

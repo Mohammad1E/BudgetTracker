@@ -51,6 +51,10 @@ Item {
                 Layout.fillWidth: true
                 Layout.preferredHeight: 420
 
+                readonly property int recentDateWidth: 110
+                readonly property int recentPersonWidth: 140
+                readonly property int recentAmountWidth: 150
+
                 ColumnLayout {
                     anchors.fill: parent
                     anchors.margins: Theme.spacingM
@@ -58,6 +62,7 @@ Item {
 
                     RowLayout {
                         Layout.fillWidth: true
+                        layoutDirection: Qt.RightToLeft
                         Text {
                             text: qsTr("أحدث العمليات")
                             font.pixelSize: Theme.fontM
@@ -85,44 +90,69 @@ Item {
                             color: "transparent"
                             required property string categoryName
                             required property string categoryColor
-                            required property string note
-                            required property string dateText
-                            required property string signedAmount
-                            required property string currency
-                            required property bool   isExpense
+                                required property string note
+                                required property string dateText
+                                required property string personName
+                                required property string signedAmount
+                                required property string currency
+                                required property bool   isExpense
 
                             RowLayout {
                                 anchors.fill: parent
                                 anchors.leftMargin: Theme.spacingS
                                 anchors.rightMargin: Theme.spacingS
+                                layoutDirection: Qt.RightToLeft
                                 spacing: Theme.spacingM
 
-                                Rectangle {
-                                    width: 10; height: 10; radius: 5
-                                    color: rowItem.categoryColor
-                                }
-                                ColumnLayout {
-                                    spacing: 0
+                                RowLayout {
                                     Layout.fillWidth: true
-                                    Text {
-                                        text: rowItem.categoryName
-                                        color: Theme.text
-                                        font.pixelSize: Theme.fontM
+                                    Layout.minimumWidth: 220
+                                    spacing: Theme.spacingS
+
+                                    Rectangle {
+                                        width: 10; height: 10; radius: 5
+                                        color: rowItem.categoryColor
+                                        Layout.alignment: Qt.AlignTop
+                                        Layout.topMargin: 7
                                     }
-                                    Text {
-                                        text: rowItem.note.length ? rowItem.note : rowItem.dateText
-                                        color: Theme.textMuted
-                                        font.pixelSize: Theme.fontS
-                                        elide: Text.ElideRight
+                                    ColumnLayout {
+                                        spacing: 0
                                         Layout.fillWidth: true
+                                        Text {
+                                            text: rowItem.categoryName
+                                            color: Theme.text
+                                            font.pixelSize: Theme.fontM
+                                            elide: Text.ElideRight
+                                            horizontalAlignment: Text.AlignRight
+                                            Layout.fillWidth: true
+                                        }
+                                        Text {
+                                            text: rowItem.note.length ? rowItem.note : qsTr("بدون ملاحظة")
+                                            color: Theme.textMuted
+                                            font.pixelSize: Theme.fontS
+                                            elide: Text.ElideRight
+                                            horizontalAlignment: Text.AlignRight
+                                            Layout.fillWidth: true
+                                        }
                                     }
+                                }
+                                Text {
+                                    text: rowItem.personName.length ? rowItem.personName : "—"
+                                    color: Theme.textMuted
+                                    font.pixelSize: Theme.fontS
+                                    elide: Text.ElideRight
+                                    horizontalAlignment: Text.AlignRight
+                                    Layout.preferredWidth: recentPersonWidth
                                 }
                                 Text {
                                     text: rowItem.dateText
                                     color: Theme.textMuted
                                     font.pixelSize: Theme.fontS
+                                    horizontalAlignment: Text.AlignHCenter
+                                    Layout.preferredWidth: recentDateWidth
                                 }
                                 MoneyText {
+                                    Layout.preferredWidth: recentAmountWidth
                                     amount: rowItem.signedAmount
                                     currency: rowItem.currency
                                     kind: rowItem.isExpense ? 0 : 1

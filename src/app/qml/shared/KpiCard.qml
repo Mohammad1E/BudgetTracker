@@ -22,9 +22,13 @@ Card {
             text: root.title
             color: Theme.textMuted
             font.pixelSize: Theme.fontS
+            horizontalAlignment: Text.AlignRight
+            Layout.fillWidth: true
         }
         Item { Layout.fillHeight: true }
         RowLayout {
+            Layout.fillWidth: true
+            layoutDirection: Qt.LeftToRight
             spacing: 6
             Text {
                 text: root.value

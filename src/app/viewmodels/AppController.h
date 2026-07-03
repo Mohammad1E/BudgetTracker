@@ -47,7 +47,12 @@ public:
     Q_INVOKABLE void removeTransaction(qint64 id);
 
     Q_INVOKABLE void addCategory(const QString& name, int type, const QString& color);
+    Q_INVOKABLE bool updateCategory(qint64 categoryId, const QString& name, int type, const QString& color);
+    Q_INVOKABLE int categoryTransactionCount(qint64 categoryId) const;
+    Q_INVOKABLE bool deleteCategory(qint64 categoryId);
     Q_INVOKABLE void addPerson(const QString& name, const QString& phone);
+    Q_INVOKABLE bool canDeletePerson(qint64 personId) const;
+    Q_INVOKABLE bool deletePerson(qint64 personId);
 
     // -1 = both, 0 = expense, 1 = income (affects the shared transactions model)
     Q_INVOKABLE void setTransactionTypeFilter(int type);

@@ -60,6 +60,27 @@ bool CategoryRepository::update(const Category& c)
     return true;
 }
 
+int CategoryRepository::transactionCount(qint64 id) const
+{
+    QSqlQuery q(m_db->connection());
+    q.prepare("SELECT COUNT(*) FROM transactions WHERE category_id=?");
+    q.addBindValue(id);
+    if (!q.exec() || !q.next()) {
+        qWarning() << "[CatRepo] transactionCount:" << q.lastError().text();
+        return 0;
+    }
+    return q.value(0).toInt();
+}
+
+bool CategoryRepository::remove(qint64 id)
+{
+    QSqlQuery q(m_db->connection());
+    q.prepare("DELETE FROM categories WHERE id=?");
+    q.addBindValue(id);
+    if (!q.exec()) { qWarning() << "[CatRepo] remove:" << q.lastError().text(); return false; }
+    return true;
+}
+
 bool CategoryRepository::setArchived(qint64 id, bool archived)
 {
     QSqlQuery q(m_db->connection());

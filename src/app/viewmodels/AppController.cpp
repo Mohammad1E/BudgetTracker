@@ -74,6 +74,41 @@ void AppController::addCategory(const QString& name, int type, const QString& co
     }
 }
 
+bool AppController::updateCategory(qint64 categoryId, const QString& name, int type, const QString& color)
+{
+    if (categoryId <= 0 || name.trimmed().isEmpty()) return false;
+
+    Category c;
+    c.id    = categoryId;
+    c.name  = name.trimmed();
+    c.type  = (type == 1) ? TxType::Income : TxType::Expense;
+    c.color = color.isEmpty() ? "#3B82F6" : color;
+
+    if (m_catRepo.update(c)) {
+        refreshAll();
+        return true;
+    }
+    return false;
+}
+
+int AppController::categoryTransactionCount(qint64 categoryId) const
+{
+    if (categoryId <= 0) return 0;
+    return m_catRepo.transactionCount(categoryId);
+}
+
+bool AppController::deleteCategory(qint64 categoryId)
+{
+    if (categoryId <= 0 || m_catRepo.transactionCount(categoryId) > 0)
+        return false;
+
+    if (m_catRepo.remove(categoryId)) {
+        refreshAll();
+        return true;
+    }
+    return false;
+}
+
 void AppController::addPerson(const QString& name, const QString& phone)
 {
     if (name.trimmed().isEmpty()) return;
@@ -84,6 +119,24 @@ void AppController::addPerson(const QString& name, const QString& phone)
         m_people->reload();
         emit dataChanged();
     }
+}
+
+bool AppController::canDeletePerson(qint64 personId) const
+{
+    return personId > 0 && !m_personRepo.hasTransactions(personId);
+}
+
+bool AppController::deletePerson(qint64 personId)
+{
+    if (personId <= 0 || m_personRepo.hasTransactions(personId))
+        return false;
+
+    if (m_personRepo.remove(personId)) {
+        m_people->reload();
+        emit dataChanged();
+        return true;
+    }
+    return false;
 }
 
 bool AppController::exportJson(const QString& fileUrlOrPath)

@@ -14,4 +14,7 @@ Text {
     font.pixelSize: Theme.fontM
     font.bold: true
     elide: Text.ElideRight
+    horizontalAlignment: Text.AlignLeft
+    verticalAlignment: Text.AlignVCenter
+    textFormat: Text.PlainText
 }

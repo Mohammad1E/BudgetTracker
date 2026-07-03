@@ -9,9 +9,9 @@ Item {
     property var pendingDeleteId: 0
 
     // shared column widths (header + rows stay aligned)
-    readonly property int wDate: 110
-    readonly property int wPerson: 140
-    readonly property int wAmount: 150
+    readonly property int wDate: 120
+    readonly property int wPerson: 160
+    readonly property int wAmount: 160
     readonly property int wAction: 44
 
     ColumnLayout {
@@ -22,6 +22,7 @@ Item {
         // ---- filters ----
         RowLayout {
             Layout.fillWidth: true
+            layoutDirection: Qt.RightToLeft
             spacing: Theme.spacingM
 
             Label { text: qsTr("النوع:"); color: Theme.textMuted }
@@ -48,19 +49,74 @@ Item {
                 // header
                 Rectangle {
                     Layout.fillWidth: true
-                    height: 40
+                    Layout.preferredHeight: 40
                     color: Theme.surfaceAlt
                     radius: Theme.radiusS
                     RowLayout {
                         anchors.fill: parent
                         anchors.leftMargin: Theme.spacingM
                         anchors.rightMargin: Theme.spacingM
+                        layoutDirection: Qt.RightToLeft
                         spacing: Theme.spacingM
-                        Text { text: qsTr("التاريخ");  Layout.preferredWidth: page.wDate;   color: Theme.textMuted; font.bold: true }
-                        Text { text: qsTr("التصنيف");   Layout.fillWidth: true;              color: Theme.textMuted; font.bold: true }
-                        Text { text: qsTr("الشخص");    Layout.preferredWidth: page.wPerson; color: Theme.textMuted; font.bold: true }
-                        Text { text: qsTr("المبلغ");    Layout.preferredWidth: page.wAmount; color: Theme.textMuted; font.bold: true; horizontalAlignment: Text.AlignRight }
-                        Item { Layout.preferredWidth: page.wAction }
+                        Item {
+                            Layout.fillWidth: true
+                            Layout.fillHeight: true
+                            clip: true
+                            Text {
+                                anchors.fill: parent
+                                text: qsTr("التصنيف")
+                                color: Theme.textMuted
+                                font.bold: true
+                                horizontalAlignment: Text.AlignRight
+                                verticalAlignment: Text.AlignVCenter
+                                elide: Text.ElideRight
+                            }
+                        }
+                        Item {
+                            Layout.preferredWidth: page.wPerson
+                            Layout.fillHeight: true
+                            clip: true
+                            Text {
+                                anchors.fill: parent
+                                text: qsTr("الشخص")
+                                color: Theme.textMuted
+                                font.bold: true
+                                horizontalAlignment: Text.AlignRight
+                                verticalAlignment: Text.AlignVCenter
+                                elide: Text.ElideRight
+                            }
+                        }
+                        Item {
+                            Layout.preferredWidth: page.wDate
+                            Layout.fillHeight: true
+                            clip: true
+                            Text {
+                                anchors.fill: parent
+                                text: qsTr("التاريخ")
+                                color: Theme.textMuted
+                                font.bold: true
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                            }
+                        }
+                        Item {
+                            Layout.preferredWidth: page.wAmount
+                            Layout.fillHeight: true
+                            clip: true
+                            Text {
+                                anchors.fill: parent
+                                text: qsTr("المبلغ")
+                                color: Theme.textMuted
+                                font.bold: true
+                                horizontalAlignment: Text.AlignLeft
+                                verticalAlignment: Text.AlignVCenter
+                                elide: Text.ElideRight
+                            }
+                        }
+                        Item {
+                            Layout.preferredWidth: page.wAction
+                            Layout.fillHeight: true
+                        }
                     }
                 }
 
@@ -94,52 +150,100 @@ Item {
                             anchors.fill: parent
                             anchors.leftMargin: Theme.spacingM
                             anchors.rightMargin: Theme.spacingM
+                            layoutDirection: Qt.RightToLeft
                             spacing: Theme.spacingM
 
-                            Text {
-                                text: dateText
-                                Layout.preferredWidth: page.wDate
-                                color: Theme.textMuted
-                                font.pixelSize: Theme.fontS
-                            }
-                            RowLayout {
+                            Item {
                                 Layout.fillWidth: true
-                                spacing: Theme.spacingS
-                                Rectangle { width: 10; height: 10; radius: 5; color: categoryColor }
-                                ColumnLayout {
-                                    spacing: 0
-                                    Layout.fillWidth: true
-                                    Text { text: categoryName; color: Theme.text; font.pixelSize: Theme.fontM }
-                                    Text {
-                                        text: note
-                                        visible: note.length > 0
-                                        color: Theme.textMuted
-                                        font.pixelSize: Theme.fontS
-                                        elide: Text.ElideRight
+                                Layout.fillHeight: true
+                                clip: true
+                                RowLayout {
+                                    anchors.fill: parent
+                                    spacing: Theme.spacingS
+                                    Rectangle {
+                                        width: 10; height: 10; radius: 5
+                                        color: categoryColor
+                                        Layout.alignment: Qt.AlignTop
+                                        Layout.topMargin: 7
+                                    }
+                                    ColumnLayout {
+                                        spacing: 0
                                         Layout.fillWidth: true
+                                        Text {
+                                            text: categoryName
+                                            color: Theme.text
+                                            font.pixelSize: Theme.fontM
+                                            elide: Text.ElideRight
+                                            horizontalAlignment: Text.AlignRight
+                                            Layout.fillWidth: true
+                                        }
+                                        Text {
+                                            text: note
+                                            visible: note.length > 0
+                                            color: Theme.textMuted
+                                            font.pixelSize: Theme.fontS
+                                            elide: Text.ElideRight
+                                            horizontalAlignment: Text.AlignRight
+                                            Layout.fillWidth: true
+                                        }
                                     }
                                 }
                             }
-                            Text {
-                                text: personName.length ? personName : "—"
+                            Item {
                                 Layout.preferredWidth: page.wPerson
-                                color: Theme.textMuted
-                                font.pixelSize: Theme.fontS
-                                elide: Text.ElideRight
+                                Layout.fillHeight: true
+                                clip: true
+                                Text {
+                                    anchors.fill: parent
+                                    text: personName.length ? personName : "—"
+                                    color: Theme.textMuted
+                                    font.pixelSize: Theme.fontS
+                                    elide: Text.ElideRight
+                                    horizontalAlignment: Text.AlignRight
+                                    verticalAlignment: Text.AlignVCenter
+                                }
                             }
-                            MoneyText {
+                            Item {
+                                Layout.preferredWidth: page.wDate
+                                Layout.fillHeight: true
+                                clip: true
+                                Text {
+                                    anchors.fill: parent
+                                    text: dateText
+                                    color: Theme.textMuted
+                                    font.pixelSize: Theme.fontS
+                                    horizontalAlignment: Text.AlignHCenter
+                                    verticalAlignment: Text.AlignVCenter
+                                    elide: Text.ElideRight
+                                }
+                            }
+                            Item {
                                 Layout.preferredWidth: page.wAmount
-                                horizontalAlignment: Text.AlignRight
-                                amount: rowDel.signedAmount
-                                currency: rowDel.currency
-                                kind: rowDel.isExpense ? 0 : 1
+                                Layout.fillHeight: true
+                                clip: true
+                                MoneyText {
+                                    anchors.fill: parent
+                                    amount: rowDel.signedAmount
+                                    currency: rowDel.currency
+                                    kind: rowDel.isExpense ? 0 : 1
+                                }
                             }
-                            ToolButton {
+                            Item {
                                 Layout.preferredWidth: page.wAction
-                                text: "🗑"
-                                onClicked: {
-                                    page.pendingDeleteId = rowDel.txId
-                                    confirmDeleteDialog.open()
+                                Layout.fillHeight: true
+                                ToolButton {
+                                    width: 28
+                                    height: 28
+                                    anchors.centerIn: parent
+                                    text: "×"
+                                    font.pixelSize: 18
+                                    font.bold: true
+                                    ToolTip.text: qsTr("حذف")
+                                    ToolTip.visible: hovered
+                                    onClicked: {
+                                        page.pendingDeleteId = rowDel.txId
+                                        confirmDeleteDialog.open()
+                                    }
                                 }
                             }
                         }
