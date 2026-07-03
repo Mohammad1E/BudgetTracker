@@ -25,6 +25,7 @@
 *.user
 *.user.*
 .qtcreator/
+.agents/
 
 # OS
 .DS_Store
