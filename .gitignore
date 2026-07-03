@@ -4,6 +4,7 @@
 /cmake-build-*/
 /out/
 /src/app/build/
+/release/
 
 # Qt / CMake
 **/CMakeCache.txt
