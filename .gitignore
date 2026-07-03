@@ -1,0 +1,62 @@
+# Build output
+/build/
+/build-*/
+/cmake-build-*/
+/out/
+/src/app/build/
+
+# Qt / CMake
+**/CMakeCache.txt
+**/CMakeFiles/
+**/cmake_install.cmake
+**/Makefile
+**/*.cmake.stamp
+**/.cmake/
+**/.qt/
+**/.qtc_clangd/
+**/.rcc/
+**/Testing/
+*.qmlc
+*.jsc
+
+# IDE
+.vscode/
+.idea/
+*.user
+*.user.*
+.qtcreator/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Compiler / linker output
+*.o
+*.obj
+*.lo
+*.a
+*.lib
+*.dll
+*.dylib
+*.so
+*.exe
+*.ilk
+*.pdb
+*.idb
+*.exp
+*.manifest
+*.res
+*.rc
+*.app
+*.d
+*.moc
+*.moc.cpp
+qrc_*.cpp
+moc_*.cpp
+ui_*.h
+
+# Local database / exports created at runtime
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+*.budget.json
