@@ -1,47 +1,90 @@
 # BudgetTracker
 
-تطبيق تتبّع راتب ومصروفات شخصي — مبني بـ **C++20 + Qt 6 (Qt Quick/QML) + SQLite + CMake**.
-الأولوية لسطح المكتب (Windows EXE)، مع تصميم جاهز لإضافة Android (APK/AAB) لاحقًا دون إعادة كتابة المنطق.
+BudgetTracker is a desktop-first personal finance application for tracking monthly income, expenses, people, categories, and reports.
 
-> الوثيقة الكاملة للتصميم والمعمارية و الـ roadmap موجودة في **[docs/DESIGN.md](docs/DESIGN.md)**.
+The project is built with C++20, Qt Quick/QML, SQLite, and CMake.  
+The main target is Windows desktop, with the codebase structured so Android support can be added later without rewriting the core logic.
 
-## المتطلبات
+## Project Status
 
-- **Qt 6.8 LTS** (مستحسن) — `Core, Gui, Qml, Quick, QuickControls2, Sql`
-- **CMake ≥ 3.21.1**
-- مترجم C++20: MSVC 2022 (مستحسن على Windows) أو MinGW
-- (لاحقًا للأندرويد) Android SDK + NDK r26b/r27c + JDK 17
+This project is currently in early development.
 
-## البناء على Windows (سطر الأوامر)
+The Windows desktop version is the main focus right now. The app already supports the core flow of adding transactions, viewing monthly totals, managing categories and people, and showing basic reports.
 
-```bat
-:: من جذر المشروع. عدّل مسار Qt حسب جهازك.
-cmake -S . -B build -G "Ninja" -DCMAKE_PREFIX_PATH="C:/Qt/6.8.2/msvc2022_64"
-cmake --build build --config Release
-:: الناتج: build/src/app/BudgetTracker.exe
-```
+Android support is planned for a later stage.
 
-أو افتح `CMakeLists.txt` مباشرة من **Qt Creator** واضغط Run.
+## Features
 
-## نشر EXE مستقل (بعد البناء)
+Current features include:
 
-```bat
-windeployqt --qmldir src/app/qml build/src/app/BudgetTracker.exe
-```
+- Monthly income and expense tracking
+- Dashboard with income, expense, and remaining balance
+- Add and delete transactions
+- People management
+- Category management
+- Basic reports
+- Local SQLite storage
+- JSON import/export
+- Arabic UI support
+- English UI support planned/being added
+- Desktop-first Qt/QML interface
 
-## هيكل المشروع (مختصر)
+## Tech Stack
 
-```
-src/core/   ← منطق مشترك (DB + repositories + services) — لا يعتمد على QML
-src/app/    ← view-models (C++) + واجهة QML + main.cpp
-tests/      ← اختبارات وحدة للـ core
-docs/       ← DESIGN.md
-```
+- C++20
+- Qt 6
+- Qt Quick / QML
+- SQLite
+- CMake
+- Qt Test
 
-## بناء الاختبارات
+## Architecture
 
-```bat
-cmake -S . -B build -DBT_BUILD_TESTS=ON -DCMAKE_PREFIX_PATH="C:/Qt/6.8.2/msvc2022_64"
-cmake --build build
-ctest --test-dir build
-```
+The project is split into two main parts:
+
+### Core Layer
+
+The core layer contains the application logic and database access.  
+It does not depend on QML, which makes it reusable across desktop and future mobile builds.
+
+Main responsibilities:
+
+- Domain models
+- SQLite database setup and migrations
+- Repositories
+- Budget calculations
+- Import/export logic
+
+### App Layer
+
+The app layer contains the Qt Quick application, view models, and QML user interface.
+
+Main responsibilities:
+
+- Connecting QML to C++ through view models
+- Desktop UI
+- Future mobile UI
+- User interaction
+- Settings and dialogs
+
+Simplified structure:
+
+```text
+BudgetTracker/
+├── src/
+│   ├── core/
+│   │   ├── domain/
+│   │   ├── data/
+│   │   └── services/
+│   │
+│   └── app/
+│       ├── viewmodels/
+│       └── qml/
+│           ├── desktop/
+│           ├── mobile/
+│           └── shared/
+│
+├── tests/
+├── docs/
+├── CMakeLists.txt
+└── README.md
