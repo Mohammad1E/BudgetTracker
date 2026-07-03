@@ -1,6 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <QQuickWindow>
 #include <QQuickStyle>
 #include <QStandardPaths>
 #include <QDir>
@@ -30,6 +31,7 @@ int main(int argc, char* argv[])
     QQuickStyle::setStyle("Material");
 #else
     QQuickStyle::setStyle("Basic");
+    QQuickWindow::setTextRenderType(QQuickWindow::NativeTextRendering);
 #endif
 
     // Open (and migrate/seed) the database before the UI loads.
