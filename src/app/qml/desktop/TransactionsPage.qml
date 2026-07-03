@@ -6,6 +6,7 @@ import BudgetTrackerUi
 Item {
     id: page
     signal requestAdd()
+    property var pendingDeleteId: 0
 
     // shared column widths (header + rows stay aligned)
     readonly property int wDate: 110
@@ -136,7 +137,10 @@ Item {
                             ToolButton {
                                 Layout.preferredWidth: page.wAction
                                 text: "🗑"
-                                onClicked: App.removeTransaction(rowDel.txId)
+                                onClicked: {
+                                    page.pendingDeleteId = rowDel.txId
+                                    confirmDeleteDialog.open()
+                                }
                             }
                         }
                         Rectangle {
@@ -168,6 +172,39 @@ Item {
                         font.pixelSize: Theme.fontS
                     }
                 }
+            }
+        }
+    }
+
+    Dialog {
+        id: confirmDeleteDialog
+        title: qsTr("تأكيد الحذف")
+        modal: true
+        anchors.centerIn: Overlay.overlay
+        closePolicy: Popup.CloseOnEscape
+
+        onAccepted: {
+            App.removeTransaction(page.pendingDeleteId)
+            page.pendingDeleteId = 0
+        }
+        onRejected: page.pendingDeleteId = 0
+
+        contentItem: Label {
+            text: qsTr("هل أنت متأكد من حذف هذه العملية؟")
+            color: Theme.text
+            wrapMode: Text.WordWrap
+            width: 320
+        }
+
+        footer: DialogButtonBox {
+            Button {
+                text: qsTr("حذف")
+                DialogButtonBox.buttonRole: DialogButtonBox.AcceptRole
+                highlighted: true
+            }
+            Button {
+                text: qsTr("إلغاء")
+                DialogButtonBox.buttonRole: DialogButtonBox.RejectRole
             }
         }
     }
