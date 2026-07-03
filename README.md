@@ -88,7 +88,7 @@ It includes:
 
 This project is intentionally built with C++ and Qt as a learning-focused desktop application.
 
-The goal is not only to build a useful budget tracker, but also to practice:
+The goal is not only to build a useful budget tracker :) , but also to practice:
 
 - C++ application design
 - Qt/QML desktop development
