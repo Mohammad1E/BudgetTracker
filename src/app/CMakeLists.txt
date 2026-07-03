@@ -10,6 +10,7 @@ qt_add_executable(BudgetTracker
     viewmodels/DashboardViewModel.h   viewmodels/DashboardViewModel.cpp
     viewmodels/CategoryListModel.h    viewmodels/CategoryListModel.cpp
     viewmodels/PersonListModel.h      viewmodels/PersonListModel.cpp
+    viewmodels/LanguageManager.h      viewmodels/LanguageManager.cpp
 )
 # Tip: add WIN32 above (qt_add_executable(BudgetTracker WIN32 ...)) for a
 # release build with no console window on Windows. Left off so you see logs.

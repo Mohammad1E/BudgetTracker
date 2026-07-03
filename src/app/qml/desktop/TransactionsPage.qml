@@ -22,18 +22,20 @@ Item {
         // ---- filters ----
         RowLayout {
             Layout.fillWidth: true
-            layoutDirection: Qt.RightToLeft
+            layoutDirection: I18n.rtl ? Qt.RightToLeft : Qt.LeftToRight
             spacing: Theme.spacingM
 
-            Label { text: qsTr("النوع:"); color: Theme.textMuted }
+            Label { text: I18n.text("النوع:", "Type:", I18n.revision); color: Theme.textMuted }
             ComboBox {
                 id: typeFilter
                 Layout.preferredWidth: 160
-                model: [qsTr("الكل"), qsTr("مصروف"), qsTr("دخل")]
+                model: [I18n.text("الكل", "All", I18n.revision),
+                        I18n.text("مصروف", "Expense", I18n.revision),
+                        I18n.text("دخل", "Income", I18n.revision)]
                 onCurrentIndexChanged: App.setTransactionTypeFilter(currentIndex - 1)
             }
             Item { Layout.fillWidth: true }
-            Button { text: qsTr("＋ إضافة عملية"); highlighted: true; onClicked: page.requestAdd() }
+            Button { text: I18n.text("＋ إضافة عملية", "+ Add transaction", I18n.revision); highlighted: true; onClicked: page.requestAdd() }
         }
 
         // ---- table ----
@@ -56,7 +58,7 @@ Item {
                         anchors.fill: parent
                         anchors.leftMargin: Theme.spacingM
                         anchors.rightMargin: Theme.spacingM
-                        layoutDirection: Qt.RightToLeft
+                        layoutDirection: I18n.rtl ? Qt.RightToLeft : Qt.LeftToRight
                         spacing: Theme.spacingM
                         Item {
                             Layout.fillWidth: true
@@ -64,10 +66,10 @@ Item {
                             clip: true
                             Text {
                                 anchors.fill: parent
-                                text: qsTr("التصنيف")
+                                text: I18n.text("التصنيف", "Category", I18n.revision)
                                 color: Theme.textMuted
                                 font.bold: true
-                                horizontalAlignment: Text.AlignRight
+                                horizontalAlignment: I18n.rtl ? Text.AlignRight : Text.AlignLeft
                                 verticalAlignment: Text.AlignVCenter
                                 elide: Text.ElideRight
                             }
@@ -78,10 +80,10 @@ Item {
                             clip: true
                             Text {
                                 anchors.fill: parent
-                                text: qsTr("الشخص")
+                                text: I18n.text("الشخص", "Person", I18n.revision)
                                 color: Theme.textMuted
                                 font.bold: true
-                                horizontalAlignment: Text.AlignRight
+                                horizontalAlignment: I18n.rtl ? Text.AlignRight : Text.AlignLeft
                                 verticalAlignment: Text.AlignVCenter
                                 elide: Text.ElideRight
                             }
@@ -92,7 +94,7 @@ Item {
                             clip: true
                             Text {
                                 anchors.fill: parent
-                                text: qsTr("التاريخ")
+                                text: I18n.text("التاريخ", "Date", I18n.revision)
                                 color: Theme.textMuted
                                 font.bold: true
                                 horizontalAlignment: Text.AlignHCenter
@@ -105,7 +107,7 @@ Item {
                             clip: true
                             Text {
                                 anchors.fill: parent
-                                text: qsTr("المبلغ")
+                                text: I18n.text("المبلغ", "Amount", I18n.revision)
                                 color: Theme.textMuted
                                 font.bold: true
                                 horizontalAlignment: Text.AlignLeft
@@ -150,7 +152,7 @@ Item {
                             anchors.fill: parent
                             anchors.leftMargin: Theme.spacingM
                             anchors.rightMargin: Theme.spacingM
-                            layoutDirection: Qt.RightToLeft
+                            layoutDirection: I18n.rtl ? Qt.RightToLeft : Qt.LeftToRight
                             spacing: Theme.spacingM
 
                             Item {
@@ -174,7 +176,7 @@ Item {
                                             color: Theme.text
                                             font.pixelSize: Theme.fontM
                                             elide: Text.ElideRight
-                                            horizontalAlignment: Text.AlignRight
+                                            horizontalAlignment: I18n.rtl ? Text.AlignRight : Text.AlignLeft
                                             Layout.fillWidth: true
                                         }
                                         Text {
@@ -183,7 +185,7 @@ Item {
                                             color: Theme.textMuted
                                             font.pixelSize: Theme.fontS
                                             elide: Text.ElideRight
-                                            horizontalAlignment: Text.AlignRight
+                                            horizontalAlignment: I18n.rtl ? Text.AlignRight : Text.AlignLeft
                                             Layout.fillWidth: true
                                         }
                                     }
@@ -199,7 +201,7 @@ Item {
                                     color: Theme.textMuted
                                     font.pixelSize: Theme.fontS
                                     elide: Text.ElideRight
-                                    horizontalAlignment: Text.AlignRight
+                                    horizontalAlignment: I18n.rtl ? Text.AlignRight : Text.AlignLeft
                                     verticalAlignment: Text.AlignVCenter
                                 }
                             }
@@ -238,7 +240,7 @@ Item {
                                     text: "×"
                                     font.pixelSize: 18
                                     font.bold: true
-                                    ToolTip.text: qsTr("حذف")
+                                    ToolTip.text: I18n.text("حذف", "Delete", I18n.revision)
                                     ToolTip.visible: hovered
                                     onClicked: {
                                         page.pendingDeleteId = rowDel.txId
@@ -256,7 +258,7 @@ Item {
                     Text {
                         anchors.centerIn: parent
                         visible: table.count === 0
-                        text: qsTr("لا توجد عمليات — اضغط “+ إضافة عملية”")
+                        text: I18n.text("لا توجد عمليات — اضغط “+ إضافة عملية”", "No transactions - click \"+ Add transaction\"", I18n.revision)
                         color: Theme.textMuted
                         font.pixelSize: Theme.fontM
                     }
@@ -271,7 +273,7 @@ Item {
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.left: parent.left
                         anchors.leftMargin: Theme.spacingM
-                        text: qsTr("عدد العمليات: ") + table.count
+                        text: I18n.text("عدد العمليات: ", "Transactions: ", I18n.revision) + table.count
                         color: Theme.textMuted
                         font.pixelSize: Theme.fontS
                     }
@@ -282,7 +284,7 @@ Item {
 
     Dialog {
         id: confirmDeleteDialog
-        title: qsTr("تأكيد الحذف")
+        title: I18n.text("تأكيد الحذف", "Confirm deletion", I18n.revision)
         modal: true
         anchors.centerIn: Overlay.overlay
         closePolicy: Popup.CloseOnEscape
@@ -294,7 +296,7 @@ Item {
         onRejected: page.pendingDeleteId = 0
 
         contentItem: Label {
-            text: qsTr("هل أنت متأكد من حذف هذه العملية؟")
+            text: I18n.text("هل أنت متأكد من حذف هذه العملية؟", "Are you sure you want to delete this transaction?", I18n.revision)
             color: Theme.text
             wrapMode: Text.WordWrap
             width: 320
@@ -302,12 +304,12 @@ Item {
 
         footer: DialogButtonBox {
             Button {
-                text: qsTr("حذف")
+                text: I18n.text("حذف", "Delete", I18n.revision)
                 DialogButtonBox.buttonRole: DialogButtonBox.AcceptRole
                 highlighted: true
             }
             Button {
-                text: qsTr("إلغاء")
+                text: I18n.text("إلغاء", "Cancel", I18n.revision)
                 DialogButtonBox.buttonRole: DialogButtonBox.RejectRole
             }
         }

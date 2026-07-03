@@ -56,20 +56,22 @@ Item {
                 anchors.margins: Theme.spacingM
                 spacing: Theme.spacingS
                 Text {
-                    text: page.editingCategoryId > 0 ? qsTr("تعديل تصنيف") : qsTr("إضافة تصنيف")
+                    text: page.editingCategoryId > 0
+                          ? I18n.text("تعديل تصنيف", "Edit category", I18n.revision)
+                          : I18n.text("إضافة تصنيف", "Add category", I18n.revision)
                     font.pixelSize: Theme.fontM
                     font.bold: true
                     color: Theme.text
                 }
                 Rectangle { Layout.fillWidth: true; height: 1; color: Theme.border }
 
-                Label { text: qsTr("الاسم") }
-                TextField { id: nameField; Layout.fillWidth: true; placeholderText: qsTr("مثال: مطاعم") }
+                Label { text: I18n.text("الاسم", "Name", I18n.revision) }
+                TextField { id: nameField; Layout.fillWidth: true; placeholderText: I18n.text("مثال: مطاعم", "Example: restaurants", I18n.revision) }
 
-                Label { text: qsTr("النوع") }
-                ComboBox { id: typeCombo; Layout.fillWidth: true; model: [qsTr("مصروف"), qsTr("دخل")] }
+                Label { text: I18n.text("النوع", "Type", I18n.revision) }
+                ComboBox { id: typeCombo; Layout.fillWidth: true; model: [I18n.text("مصروف", "Expense", I18n.revision), I18n.text("دخل", "Income", I18n.revision)] }
 
-                Label { text: qsTr("اللون") }
+                Label { text: I18n.text("اللون", "Color", I18n.revision) }
                 RowLayout {
                     Layout.fillWidth: true
                     spacing: 6
@@ -89,7 +91,7 @@ Item {
                 }
 
                 Button {
-                    text: page.editingCategoryId > 0 ? qsTr("تعديل") : qsTr("حفظ")
+                    text: page.editingCategoryId > 0 ? I18n.text("تعديل", "Edit", I18n.revision) : I18n.text("حفظ", "Save", I18n.revision)
                     highlighted: true
                     enabled: nameField.text.trim().length > 0
                     onClicked: {
@@ -107,7 +109,7 @@ Item {
                     }
                 }
                 Button {
-                    text: qsTr("إلغاء")
+                    text: I18n.text("إلغاء", "Cancel", I18n.revision)
                     visible: page.editingCategoryId > 0
                     onClicked: page.clearForm()
                 }
@@ -123,7 +125,7 @@ Item {
                 anchors.fill: parent
                 anchors.margins: Theme.spacingM
                 spacing: Theme.spacingS
-                Text { text: qsTr("التصنيفات"); font.pixelSize: Theme.fontM; font.bold: true; color: Theme.text }
+                Text { text: I18n.text("التصنيفات", "Categories", I18n.revision); font.pixelSize: Theme.fontM; font.bold: true; color: Theme.text }
                 Rectangle { Layout.fillWidth: true; height: 1; color: Theme.border }
                 Text {
                     id: statusLabel
@@ -156,14 +158,14 @@ Item {
                             Rectangle { width: 14; height: 14; radius: 4; color: del.color }
                             Text { text: del.name; color: Theme.text; font.pixelSize: Theme.fontM; Layout.fillWidth: true }
                             Text {
-                                text: del.catType === 1 ? qsTr("دخل") : qsTr("مصروف")
+                                text: del.catType === 1 ? I18n.text("دخل", "Income", I18n.revision) : I18n.text("مصروف", "Expense", I18n.revision)
                                 color: del.catType === 1 ? Theme.income : Theme.expense
                                 font.pixelSize: Theme.fontS
                             }
                             ToolButton {
                                 Layout.preferredWidth: 72
                                 Layout.preferredHeight: 32
-                                text: qsTr("تعديل")
+                                text: I18n.text("تعديل", "Edit", I18n.revision)
                                 onClicked: page.startEdit(del.catId, del.name, del.catType, del.color)
                             }
                             ToolButton {
@@ -172,11 +174,11 @@ Item {
                                 text: "×"
                                 font.pixelSize: 18
                                 font.bold: true
-                                ToolTip.text: qsTr("حذف")
+                                ToolTip.text: I18n.text("حذف", "Delete", I18n.revision)
                                 ToolTip.visible: hovered
                                 onClicked: {
                                     if (App.categoryTransactionCount(del.catId) > 0) {
-                                        statusLabel.text = qsTr("لا يمكن حذف هذا التصنيف لأنه مرتبط بعمليات.")
+                                        statusLabel.text = I18n.text("لا يمكن حذف هذا التصنيف لأنه مرتبط بعمليات.", "This category cannot be deleted because it is linked to transactions.", I18n.revision)
                                         return
                                     }
                                     page.pendingDeleteId = del.catId
@@ -194,20 +196,20 @@ Item {
 
     Dialog {
         id: confirmDeleteDialog
-        title: qsTr("تأكيد الحذف")
+        title: I18n.text("تأكيد الحذف", "Confirm deletion", I18n.revision)
         modal: true
         anchors.centerIn: Overlay.overlay
         closePolicy: Popup.CloseOnEscape
 
         onAccepted: {
             if (!App.deleteCategory(page.pendingDeleteId))
-                statusLabel.text = qsTr("لا يمكن حذف هذا التصنيف لأنه مرتبط بعمليات.")
+                statusLabel.text = I18n.text("لا يمكن حذف هذا التصنيف لأنه مرتبط بعمليات.", "This category cannot be deleted because it is linked to transactions.", I18n.revision)
             page.pendingDeleteId = 0
         }
         onRejected: page.pendingDeleteId = 0
 
         contentItem: Label {
-            text: qsTr("هل أنت متأكد من حذف هذا التصنيف؟")
+            text: I18n.text("هل أنت متأكد من حذف هذا التصنيف؟", "Are you sure you want to delete this category?", I18n.revision)
             color: Theme.text
             wrapMode: Text.WordWrap
             width: 320
@@ -215,12 +217,12 @@ Item {
 
         footer: DialogButtonBox {
             Button {
-                text: qsTr("حذف")
+                text: I18n.text("حذف", "Delete", I18n.revision)
                 DialogButtonBox.buttonRole: DialogButtonBox.AcceptRole
                 highlighted: true
             }
             Button {
-                text: qsTr("إلغاء")
+                text: I18n.text("إلغاء", "Cancel", I18n.revision)
                 DialogButtonBox.buttonRole: DialogButtonBox.RejectRole
             }
         }
@@ -228,7 +230,7 @@ Item {
 
     Dialog {
         id: confirmEditDialog
-        title: qsTr("تأكيد تعديل التصنيف")
+        title: I18n.text("تأكيد تعديل التصنيف", "Confirm category edit", I18n.revision)
         modal: true
         anchors.centerIn: Overlay.overlay
         closePolicy: Popup.CloseOnEscape
@@ -236,8 +238,10 @@ Item {
         onAccepted: page.applyCategoryUpdate()
 
         contentItem: Label {
-            text: qsTr("هذا التصنيف مرتبط بـ ") + page.pendingEditCount
-                  + qsTr(" عمليات. تعديل التصنيف سيؤثر على هذه العمليات. هل تريد المتابعة؟")
+            text: I18n.text("هذا التصنيف مرتبط بـ ", "This category is linked to ", I18n.revision) + page.pendingEditCount
+                  + I18n.text(" عمليات. تعديل التصنيف سيؤثر على هذه العمليات. هل تريد المتابعة؟",
+                              " transactions. Editing the category will affect these transactions. Do you want to continue?",
+                              I18n.revision)
             color: Theme.text
             wrapMode: Text.WordWrap
             width: 360
@@ -245,12 +249,12 @@ Item {
 
         footer: DialogButtonBox {
             Button {
-                text: qsTr("تعديل")
+                text: I18n.text("تعديل", "Edit", I18n.revision)
                 DialogButtonBox.buttonRole: DialogButtonBox.AcceptRole
                 highlighted: true
             }
             Button {
-                text: qsTr("إلغاء")
+                text: I18n.text("إلغاء", "Cancel", I18n.revision)
                 DialogButtonBox.buttonRole: DialogButtonBox.RejectRole
             }
         }

@@ -8,6 +8,7 @@
 
 #include "data/Database.h"
 #include "viewmodels/AppController.h"
+#include "viewmodels/LanguageManager.h"
 
 using namespace bt;
 
@@ -42,9 +43,11 @@ int main(int argc, char* argv[])
     }
 
     AppController controller(&db);
+    LanguageManager languageManager;
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("App", &controller);
+    engine.rootContext()->setContextProperty("I18n", &languageManager);
 
     // Loads Main.qml from the BudgetTrackerUi module. CMake compiles the
     // desktop OR mobile Main.qml depending on the target platform.

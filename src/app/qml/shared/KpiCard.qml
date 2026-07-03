@@ -22,7 +22,7 @@ Card {
             text: root.title
             color: Theme.textMuted
             font.pixelSize: Theme.fontS
-            horizontalAlignment: Text.AlignRight
+            horizontalAlignment: I18n.rtl ? Text.AlignRight : Text.AlignLeft
             Layout.fillWidth: true
         }
         Item { Layout.fillHeight: true }

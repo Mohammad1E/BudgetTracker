@@ -12,12 +12,16 @@ ApplicationWindow {
     height: 760
     minimumWidth: 920
     minimumHeight: 560
-    title: qsTr("Budget Tracker")
+    title: I18n.text("Budget Tracker", "Budget Tracker", I18n.revision)
     color: Theme.bg
 
     function pageTitle(i) {
-        return [qsTr("لوحة المعلومات"), qsTr("العمليات"), qsTr("التقارير"),
-                qsTr("الأشخاص"), qsTr("التصنيفات"), qsTr("الإعدادات")][i] || ""
+        return [I18n.text("لوحة المعلومات", "Dashboard", I18n.revision),
+                I18n.text("العمليات", "Transactions", I18n.revision),
+                I18n.text("التقارير", "Reports", I18n.revision),
+                I18n.text("الأشخاص", "People", I18n.revision),
+                I18n.text("التصنيفات", "Categories", I18n.revision),
+                I18n.text("الإعدادات", "Settings", I18n.revision)][i] || ""
     }
 
     RowLayout {
@@ -74,7 +78,7 @@ ApplicationWindow {
                     ToolButton { text: "›"; onClicked: App.goToNextMonth() }
 
                     Button {
-                        text: qsTr("＋ إضافة عملية")
+                        text: I18n.text("＋ إضافة عملية", "+ Add transaction", I18n.revision)
                         highlighted: true
                         onClicked: addDialog.open()
                     }

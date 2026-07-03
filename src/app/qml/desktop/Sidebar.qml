@@ -10,12 +10,12 @@ Rectangle {
     property int currentIndex: 0
 
     readonly property var entries: [
-        { label: qsTr("لوحة المعلومات"), glyph: "▦" },
-        { label: qsTr("العمليات"),       glyph: "≣" },
-        { label: qsTr("التقارير"),        glyph: "▤" },
-        { label: qsTr("الأشخاص"),         glyph: "☺" },
-        { label: qsTr("التصنيفات"),       glyph: "❏" },
-        { label: qsTr("الإعدادات"),       glyph: "⚙" }
+        { label: I18n.text("لوحة المعلومات", "Dashboard", I18n.revision), glyph: "▦" },
+        { label: I18n.text("العمليات", "Transactions", I18n.revision), glyph: "≣" },
+        { label: I18n.text("التقارير", "Reports", I18n.revision), glyph: "▤" },
+        { label: I18n.text("الأشخاص", "People", I18n.revision), glyph: "☺" },
+        { label: I18n.text("التصنيفات", "Categories", I18n.revision), glyph: "❏" },
+        { label: I18n.text("الإعدادات", "Settings", I18n.revision), glyph: "⚙" }
     ]
 
     ColumnLayout {
@@ -60,6 +60,8 @@ Rectangle {
                 RowLayout {
                     anchors.fill: parent
                     anchors.leftMargin: Theme.spacingM
+                    anchors.rightMargin: Theme.spacingM
+                    layoutDirection: I18n.rtl ? Qt.RightToLeft : Qt.LeftToRight
                     spacing: Theme.spacingM
                     Text {
                         text: row.modelData.glyph

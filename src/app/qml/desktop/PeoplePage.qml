@@ -20,14 +20,14 @@ Item {
                 anchors.fill: parent
                 anchors.margins: Theme.spacingM
                 spacing: Theme.spacingS
-                Text { text: qsTr("إضافة شخص"); font.pixelSize: Theme.fontM; font.bold: true; color: Theme.text }
+                Text { text: I18n.text("إضافة شخص", "Add person", I18n.revision); font.pixelSize: Theme.fontM; font.bold: true; color: Theme.text }
                 Rectangle { Layout.fillWidth: true; height: 1; color: Theme.border }
-                Label { text: qsTr("الاسم") }
-                TextField { id: nameField; Layout.fillWidth: true; placeholderText: qsTr("مثال: أحمد") }
-                Label { text: qsTr("الهاتف (اختياري)") }
+                Label { text: I18n.text("الاسم", "Name", I18n.revision) }
+                TextField { id: nameField; Layout.fillWidth: true; placeholderText: I18n.text("مثال: أحمد", "Example: Ahmad", I18n.revision) }
+                Label { text: I18n.text("الهاتف (اختياري)", "Phone (optional)", I18n.revision) }
                 TextField { id: phoneField; Layout.fillWidth: true; inputMethodHints: Qt.ImhDialableCharactersOnly }
                 Button {
-                    text: qsTr("حفظ")
+                    text: I18n.text("حفظ", "Save", I18n.revision)
                     highlighted: true
                     enabled: nameField.text.trim().length > 0
                     onClicked: {
@@ -49,7 +49,7 @@ Item {
                 anchors.fill: parent
                 anchors.margins: Theme.spacingM
                 spacing: Theme.spacingS
-                Text { text: qsTr("الأشخاص"); font.pixelSize: Theme.fontM; font.bold: true; color: Theme.text }
+                Text { text: I18n.text("الأشخاص", "People", I18n.revision); font.pixelSize: Theme.fontM; font.bold: true; color: Theme.text }
                 Rectangle { Layout.fillWidth: true; height: 1; color: Theme.border }
                 Text {
                     id: statusLabel
@@ -87,11 +87,11 @@ Item {
                                 text: "×"
                                 font.pixelSize: 18
                                 font.bold: true
-                                ToolTip.text: qsTr("حذف")
+                                ToolTip.text: I18n.text("حذف", "Delete", I18n.revision)
                                 ToolTip.visible: hovered
                                 onClicked: {
                                     if (!App.canDeletePerson(rowDel.personId)) {
-                                        statusLabel.text = qsTr("لا يمكن حذف هذا الشخص لأنه مرتبط بعمليات.")
+                                        statusLabel.text = I18n.text("لا يمكن حذف هذا الشخص لأنه مرتبط بعمليات.", "This person cannot be deleted because they are linked to transactions.", I18n.revision)
                                         return
                                     }
                                     page.pendingDeleteId = rowDel.personId
@@ -105,7 +105,7 @@ Item {
                     Text {
                         anchors.centerIn: parent
                         visible: list.count === 0
-                        text: qsTr("لا يوجد أشخاص بعد")
+                        text: I18n.text("لا يوجد أشخاص بعد", "No people yet", I18n.revision)
                         color: Theme.textMuted
                     }
                 }
@@ -115,20 +115,20 @@ Item {
 
     Dialog {
         id: confirmDeleteDialog
-        title: qsTr("تأكيد الحذف")
+        title: I18n.text("تأكيد الحذف", "Confirm deletion", I18n.revision)
         modal: true
         anchors.centerIn: Overlay.overlay
         closePolicy: Popup.CloseOnEscape
 
         onAccepted: {
             if (!App.deletePerson(page.pendingDeleteId))
-                statusLabel.text = qsTr("لا يمكن حذف هذا الشخص لأنه مرتبط بعمليات.")
+                statusLabel.text = I18n.text("لا يمكن حذف هذا الشخص لأنه مرتبط بعمليات.", "This person cannot be deleted because they are linked to transactions.", I18n.revision)
             page.pendingDeleteId = 0
         }
         onRejected: page.pendingDeleteId = 0
 
         contentItem: Label {
-            text: qsTr("هل أنت متأكد من حذف هذا الشخص؟")
+            text: I18n.text("هل أنت متأكد من حذف هذا الشخص؟", "Are you sure you want to delete this person?", I18n.revision)
             color: Theme.text
             wrapMode: Text.WordWrap
             width: 320
@@ -136,12 +136,12 @@ Item {
 
         footer: DialogButtonBox {
             Button {
-                text: qsTr("حذف")
+                text: I18n.text("حذف", "Delete", I18n.revision)
                 DialogButtonBox.buttonRole: DialogButtonBox.AcceptRole
                 highlighted: true
             }
             Button {
-                text: qsTr("إلغاء")
+                text: I18n.text("إلغاء", "Cancel", I18n.revision)
                 DialogButtonBox.buttonRole: DialogButtonBox.RejectRole
             }
         }

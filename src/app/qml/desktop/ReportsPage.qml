@@ -43,7 +43,7 @@ Item {
                     spacing: Theme.spacingM
 
                     Text {
-                        text: qsTr("المصروفات حسب التصنيف") + " — " + App.currentMonth
+                        text: I18n.text("المصروفات حسب التصنيف", "Expenses by category", I18n.revision) + " — " + App.currentMonth
                         font.pixelSize: Theme.fontM
                         font.bold: true
                         color: Theme.text
@@ -52,7 +52,7 @@ Item {
 
                     Text {
                         visible: page.rows.length === 0
-                        text: qsTr("لا توجد مصروفات لهذا الشهر")
+                        text: I18n.text("لا توجد مصروفات لهذا الشهر", "No expenses for this month", I18n.revision)
                         color: Theme.textMuted
                     }
 
@@ -97,7 +97,9 @@ Item {
                 wrapMode: Text.WordWrap
                 color: Theme.textMuted
                 font.pixelSize: Theme.fontS
-                text: qsTr("ملاحظة: الرسوم البيانية هنا مرسومة يدويًا بـ QML (بدون QtCharts) لتبقى تحت رخصة LGPL. راجع docs/DESIGN.md.")
+                text: I18n.text("ملاحظة: الرسوم البيانية هنا مرسومة يدويًا بـ QML (بدون QtCharts) لتبقى تحت رخصة LGPL. راجع docs/DESIGN.md.",
+                                "Note: Charts here are drawn manually in QML (without QtCharts) to stay under LGPL. See docs/DESIGN.md.",
+                                I18n.revision)
             }
         }
     }

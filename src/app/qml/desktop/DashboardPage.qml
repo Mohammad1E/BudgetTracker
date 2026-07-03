@@ -25,21 +25,21 @@ Item {
 
                 KpiCard {
                     Layout.fillWidth: true
-                    title: qsTr("إجمالي الدخل")
+                    title: I18n.text("إجمالي الدخل", "Total income", I18n.revision)
                     value: App.dashboard.incomeText
                     currency: App.dashboard.currency
                     tone: Theme.income
                 }
                 KpiCard {
                     Layout.fillWidth: true
-                    title: qsTr("إجمالي المصروف")
+                    title: I18n.text("إجمالي المصروف", "Total expenses", I18n.revision)
                     value: App.dashboard.expenseText
                     currency: App.dashboard.currency
                     tone: Theme.expense
                 }
                 KpiCard {
                     Layout.fillWidth: true
-                    title: qsTr("المتبقي من الراتب")
+                    title: I18n.text("المتبقي من الراتب", "Salary remaining", I18n.revision)
                     value: App.dashboard.remainingText
                     currency: App.dashboard.currency
                     tone: App.dashboard.isNegative ? Theme.expense : Theme.primary
@@ -62,15 +62,15 @@ Item {
 
                     RowLayout {
                         Layout.fillWidth: true
-                        layoutDirection: Qt.RightToLeft
+                        layoutDirection: I18n.rtl ? Qt.RightToLeft : Qt.LeftToRight
                         Text {
-                            text: qsTr("أحدث العمليات")
+                            text: I18n.text("أحدث العمليات", "Recent transactions", I18n.revision)
                             font.pixelSize: Theme.fontM
                             font.bold: true
                             color: Theme.text
                         }
                         Item { Layout.fillWidth: true }
-                        Button { text: qsTr("＋ إضافة"); onClicked: page.requestAdd() }
+                        Button { text: I18n.text("＋ إضافة", "+ Add", I18n.revision); onClicked: page.requestAdd() }
                     }
 
                     Rectangle { Layout.fillWidth: true; height: 1; color: Theme.border }
@@ -101,7 +101,7 @@ Item {
                                 anchors.fill: parent
                                 anchors.leftMargin: Theme.spacingS
                                 anchors.rightMargin: Theme.spacingS
-                                layoutDirection: Qt.RightToLeft
+                                layoutDirection: I18n.rtl ? Qt.RightToLeft : Qt.LeftToRight
                                 spacing: Theme.spacingM
 
                                 RowLayout {
@@ -123,15 +123,15 @@ Item {
                                             color: Theme.text
                                             font.pixelSize: Theme.fontM
                                             elide: Text.ElideRight
-                                            horizontalAlignment: Text.AlignRight
+                                            horizontalAlignment: I18n.rtl ? Text.AlignRight : Text.AlignLeft
                                             Layout.fillWidth: true
                                         }
                                         Text {
-                                            text: rowItem.note.length ? rowItem.note : qsTr("بدون ملاحظة")
+                                            text: rowItem.note.length ? rowItem.note : I18n.text("بدون ملاحظة", "No note", I18n.revision)
                                             color: Theme.textMuted
                                             font.pixelSize: Theme.fontS
                                             elide: Text.ElideRight
-                                            horizontalAlignment: Text.AlignRight
+                                            horizontalAlignment: I18n.rtl ? Text.AlignRight : Text.AlignLeft
                                             Layout.fillWidth: true
                                         }
                                     }
@@ -141,7 +141,7 @@ Item {
                                     color: Theme.textMuted
                                     font.pixelSize: Theme.fontS
                                     elide: Text.ElideRight
-                                    horizontalAlignment: Text.AlignRight
+                                    horizontalAlignment: I18n.rtl ? Text.AlignRight : Text.AlignLeft
                                     Layout.preferredWidth: recentPersonWidth
                                 }
                                 Text {
@@ -168,7 +168,7 @@ Item {
                         Text {
                             anchors.centerIn: parent
                             visible: list.count === 0
-                            text: qsTr("لا توجد عمليات لهذا الشهر")
+                            text: I18n.text("لا توجد عمليات لهذا الشهر", "No transactions for this month", I18n.revision)
                             color: Theme.textMuted
                             font.pixelSize: Theme.fontM
                         }
